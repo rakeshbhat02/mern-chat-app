@@ -1,6 +1,17 @@
-import React from 'react'
+import {useState} from 'react'
+import { Link } from 'react-router-dom'
+import useLogin from '../../hooks/useLogin'
 
 const Login = () => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const {loading, login} = useLogin();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        await login(username, password);
+    }
   return (
     <div className='flex flex-col items-center justify-center min-w-96 mx-auto'>
         <div className='w-full p-6 rounder-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter
@@ -9,21 +20,25 @@ const Login = () => {
                 Login
             </h1>
             <br></br>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div>
-                    <input type='text' placeholder='Username' className='w-full input input-bordered h-10'/>
+                    <input type='text' placeholder='Username' className='w-full input input-bordered h-10'
+                    value={username} onChange={(e) => setUsername(e.target.value)}/>
                     <br/><br/>
                 </div>
                 <div>
-                    <input type='text' placeholder='Password' className='w-full input input-bordered h-10'/>
+                    <input type='password' placeholder='Password' className='w-full input input-bordered h-10'
+                    value={password} onChange={(e) => setPassword(e.target.value)}/>
                     <br/><br/>
                 </div>
                 <div>
-                    <button className='btn btn-block btn-sm mt-2'>Login</button>
+                    <button className='btn btn-block btn-sm mt-2' disabled={loading}>
+                        {loading?<span className='loading loading-spinner'></span> : 'Login'}
+                    </button>
                 </div>
-                <a href="#" className='text-sm hover:underline hover:text-blue-600 mt-2 inline-block'>
+                <Link to="/signup" className='text-sm hover:underline hover:text-blue-600 mt-2 inline-block'>
                     {"Don't"} have an account? Sign up
-                </a>
+                </Link>
             </form>
         </div>
     </div>
