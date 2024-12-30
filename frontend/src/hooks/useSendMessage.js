@@ -20,8 +20,8 @@ const useSendMessage = () => {
       const data = await res.json();
       if (data.error) throw new Error(data.error);
 
-      //console.log('New Message:', data.newMessage);
-      setMessages([...messages, data.newMessage]); // major roadblock while following the tutorial which is not adding .newMessage to the messages array
+      setMessages([...messages, data]); // major roadblock while following the tutorial which is not adding .newMessage to the messages array
+      //Fun fact - had to change it back to original ;-)
     } catch (error) {
       toast.error(error.message);
     } finally {

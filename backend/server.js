@@ -6,23 +6,22 @@ import authRoutes from './routes/auth.routes.js';
 import userRoutes from "./routes/user.route.js";
 import messageRoutes from './routes/message.route.js';
 import connectToMongoDB from "./db/connectToMongoDB.js";
+import {app, server} from './socket/socket.js';
 
-
-const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
 const PORT = process.env.PORT;
-app.get("/", (req, res) => {
-  res.send("Hello world");
-});
+// app.get("/", (req, res) => {
+//   res.send("Hello world");
+// });
 
 app.use('/api/auth', authRoutes);
 app.use('/api/messages', messageRoutes);
 app.use('/api/users', userRoutes);
  
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     connectToMongoDB();
   console.log(`Server listening on http://localhost:${PORT}`);
 });
